@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Pedidos.Apps</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CleanArch.UseCase" Version="1.0.19-beta-gd8a2948d46" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Producao.Domain\Producao.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
