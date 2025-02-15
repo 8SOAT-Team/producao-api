@@ -1,9 +1,9 @@
-# 📦 API de Pedidos 
+# 📦 API de Produção 
 ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/victoromc/bd5447fccccec9b660124c91b3d27ae3/raw/pedidos-code-coverage.json)
 
 ## Objetivos
 
-Este repositório contém a API de pedidos, desenvolvida utilizando .NET 8. O processo de build, publicação e deployment funciona via workflow no GitHub Actions.
+Este repositório contém a API de produção, desenvolvida utilizando .NET 8. O processo de build, publicação e deployment funciona via workflow no GitHub Actions.
 
 ## Requisitos
 
@@ -161,9 +161,9 @@ kubectl get pods -n fast-order
 ```sh
 /
 ├── src/
-│   ├── Pedidos.Api/                # Projeto principal da API
-│   │   ├── Pedidos.Api.csproj      # Arquivo de projeto do .NET
-│   ├── Pedidos.Tests/              # Testes unitários
+│   ├── Producao.Api/               # Projeto principal da API
+│   │   ├── Producao.Api.csproj     # Arquivo de projeto do .NET
+│   ├── Producao.Tests/             # Testes unitários
 │
 ├── iac/
 │   ├── kubernetes/                 # Manifests do Kubernetes para deployment
