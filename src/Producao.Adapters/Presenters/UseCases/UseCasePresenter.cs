@@ -1,8 +1,9 @@
 ﻿using CleanArch.UseCase.Faults;
 using Pedidos.Adapters.Types.Results;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Adapters.Presenters.UseCases;
-
+[ExcludeFromCodeCoverage]
 public static class UseCasePresenter
 {
     public static IEnumerable<AppProblemDetails> AdaptUseCaseErrors(this IEnumerable<UseCaseError> errors,

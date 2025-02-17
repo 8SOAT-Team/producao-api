@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Pedidos.Adapters.Controllers.Pedidos;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
@@ -8,7 +9,7 @@ using Pedidos.Api.Endpoints;
 using Pedidos.Api.Endpoints.Extensions;
 
 namespace Producao.Api.Producao;
-
+[ExcludeFromCodeCoverage]
 public static class ProducaoEndpoint
 {
     public static void AddEndpointProducao(this WebApplication app, RouteGroupBuilder group)

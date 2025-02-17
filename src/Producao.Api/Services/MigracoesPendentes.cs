@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pedidos.Infrastructure.Databases;
 using Serilog;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Api.Services;
-
+[ExcludeFromCodeCoverage]
 public static class MigracoesPendentes
 {
     public static async Task ExecuteMigrationAsync(this IApplicationBuilder app)

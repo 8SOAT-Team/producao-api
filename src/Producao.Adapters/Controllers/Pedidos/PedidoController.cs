@@ -12,9 +12,10 @@ using Pedidos.Domain.Pedidos.Enums;
 using NovoPedidoDto = Pedidos.Adapters.Controllers.Pedidos.Dtos.NovoPedidoDto;
 using NovoPedido = Pedidos.Apps.Pedidos.UseCases.Dtos.NovoPedidoDto;
 using ItemDoPedido = Pedidos.Apps.Pedidos.UseCases.Dtos.ItemDoPedidoDto;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Adapters.Controllers.Pedidos;
-
+[ExcludeFromCodeCoverage]
 public class PedidoController(
     ILoggerFactory logger,
     IPedidoGateway pedidoGateway,

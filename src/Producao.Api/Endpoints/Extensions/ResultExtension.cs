@@ -1,7 +1,8 @@
 ﻿using Pedidos.Adapters.Types.Results;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Api.Endpoints.Extensions;
-
+[ExcludeFromCodeCoverage]
 public static class ResultExtension
 {
     public static IResult GetResult<T>(this Result<T> result)

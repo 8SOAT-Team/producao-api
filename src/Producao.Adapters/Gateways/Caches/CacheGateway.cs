@@ -1,5 +1,7 @@
-﻿namespace Pedidos.Adapters.Gateways.Caches;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Pedidos.Adapters.Gateways.Caches;
+[ExcludeFromCodeCoverage]
 public abstract class CacheGateway<TEntity>(ICacheContext cache)
 {
     protected abstract Dictionary<string, Func<TEntity, (string cacheKey, bool InvalidateCacheOnChanges)>> CacheKeys
