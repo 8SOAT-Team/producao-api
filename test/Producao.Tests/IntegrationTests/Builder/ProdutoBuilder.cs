@@ -1,9 +1,10 @@
 ﻿using Bogus;
 using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Tests.IntegrationTests.Builder;
-
+[ExcludeFromCodeCoverage]
 public sealed class ProdutoBuilder : Faker<Produto>
 {
     public ProdutoBuilder()
