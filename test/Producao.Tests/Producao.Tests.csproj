@@ -45,8 +45,4 @@
         <ProjectReference Include="..\..\src\Producao.Domain\Producao.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="UnitTests\Adapters\Gateways\" />
-    </ItemGroup>
-
 </Project>

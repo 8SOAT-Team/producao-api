@@ -1,4 +1,7 @@
-﻿namespace Pedidos.Api.Dtos;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Pedidos.Api.Dtos;
+[ExcludeFromCodeCoverage]
 
 public record ItemDoPedidoDto
 {
