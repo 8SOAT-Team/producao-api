@@ -8,17 +8,21 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Gateways\Pedidos\**" />
+      <Compile Remove="Gateways\Produtos\**" />
+      <EmbeddedResource Remove="Gateways\Pedidos\**" />
+      <EmbeddedResource Remove="Gateways\Produtos\**" />
+      <None Remove="Gateways\Pedidos\**" />
+      <None Remove="Gateways\Produtos\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\Producao.Apps\Producao.Apps.csproj" />
         <ProjectReference Include="..\Producao.CrossCutting\Producao.CrossCutting.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Scrutor" Version="6.0.1"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Gateways\Pedidos\"/>
-        <Folder Include="Gateways\Produtos\"/>
+        <PackageReference Include="Scrutor" Version="6.0.1" />
     </ItemGroup>
 
 </Project>

@@ -59,4 +59,50 @@ public class PedidoControllerTests
         // Assert
         Assert.IsType<OkObjectResult>(result);
     }
+
+   
+
+   
+    [Fact]
+    public async Task GetAllPedidosAsync_DeveRetornarOk()
+    {
+        // Arrange
+        var pedidos = new List<Pedido> { (Pedido)Activator.CreateInstance(typeof(Pedido), true) };
+        _pedidoGatewayMock.Setup(x => x.GetAllAsync()).ReturnsAsync(pedidos);
+
+        // Act
+        var result = await _controller.GetAllPedidosAsync();
+
+        // Assert
+        Assert.True(result.IsSucceed);
+    }
+
+    [Fact]
+    public async Task GetAllPedidosPending_DeveRetornarOk()
+    {
+        // Arrange
+        var pedidos = new List<Pedido> { (Pedido)Activator.CreateInstance(typeof(Pedido), true) };
+        _pedidoGatewayMock.Setup(x => x.GetAllPedidosPending()).ReturnsAsync(pedidos);
+
+        // Act
+        var result = await _controller.GetAllPedidosPending();
+
+        // Assert
+        Assert.True(result.IsSucceed);
+    }
+
+    [Fact]
+    public async Task GetPedidoByIdAsync_DeveRetornarOk()
+    {
+        // Arrange
+        var pedidoId = Guid.NewGuid();
+        var pedido = (Pedido)Activator.CreateInstance(typeof(Pedido), true);
+        _pedidoGatewayMock.Setup(x => x.GetByIdAsync(pedidoId)).ReturnsAsync(pedido);
+
+        // Act
+        var result = await _controller.GetPedidoByIdAsync(pedidoId);
+
+        // Assert
+        Assert.True(result.IsSucceed);
+    }
 }
