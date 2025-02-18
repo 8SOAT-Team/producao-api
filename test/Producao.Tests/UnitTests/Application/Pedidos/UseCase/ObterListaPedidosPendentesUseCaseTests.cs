@@ -4,6 +4,8 @@ using Moq;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Pedidos.UseCases;
 using Pedidos.Domain.Pedidos.Entities;
+using Pedidos.Domain.Produtos.Entities;
+using Pedidos.Domain.Produtos.Enums;
 
 namespace Pedidos.Tests.UnitTests.Application.Pedidos.UseCase;
 public class ObterListaPedidosPendentesUseCaseTests
@@ -23,10 +25,11 @@ public class ObterListaPedidosPendentesUseCaseTests
     public async Task Execute_RetornaListaDePedidosPendentes()
     {
         // Arrange
+        var itemPedido = new ItemDoPedido(Guid.NewGuid(), new Produto("Lanche", "Lanche de bacon", 50m, "http://endereco/imagens/img.jpg", ProdutoCategoria.Acompanhamento), 2);
         var expectedPedidosPendentes = new List<Pedido>
             {
-                new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>()),
-                new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>())
+                new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>() { itemPedido }),
+                new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>(){itemPedido})
             };
 
         _pedidoGatewayMock.Setup(g => g.GetAllPedidosPending()).ReturnsAsync(expectedPedidosPendentes);

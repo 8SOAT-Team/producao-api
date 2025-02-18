@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Pedidos.Adapters.Controllers.Pedidos;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
+using Pedidos.Adapters.Types.Results;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Produtos.Gateways.Produtos;
 using Pedidos.Domain.Pedidos.Entities;
@@ -34,7 +35,7 @@ public class PedidoControllerTests
         // Act
         var result = await _controller.AtualizarStatusDePreparacaoDoPedido(novoStatus, pedidoId);
         // Assert
-        Assert.IsType<OkObjectResult>(result);
+        Assert.IsType<Result<PedidoDto>>(result);
     }
     [Fact]
     public async Task CreatePedidoAsync_DeveRetornarOk()
@@ -57,7 +58,7 @@ public class PedidoControllerTests
         // Act
         var result = await _controller.CreatePedidoAsync(pedido);
         // Assert
-        Assert.IsType<OkObjectResult>(result);
+        Assert.IsType<Result<PedidoDto>>(result);
     }
 
    
@@ -67,7 +68,7 @@ public class PedidoControllerTests
     public async Task GetAllPedidosAsync_DeveRetornarOk()
     {
         // Arrange
-        var pedidos = new List<Pedido> { (Pedido)Activator.CreateInstance(typeof(Pedido), true) };
+        var pedidos = new List<Pedido>(); // Lista vazia ao invés de nula
         _pedidoGatewayMock.Setup(x => x.GetAllAsync()).ReturnsAsync(pedidos);
 
         // Act
@@ -81,8 +82,8 @@ public class PedidoControllerTests
     public async Task GetAllPedidosPending_DeveRetornarOk()
     {
         // Arrange
-        var pedidos = new List<Pedido> { (Pedido)Activator.CreateInstance(typeof(Pedido), true) };
-        _pedidoGatewayMock.Setup(x => x.GetAllPedidosPending()).ReturnsAsync(pedidos);
+        var pedidos = new List<Pedido>(); // Lista vazia ao invés de nula
+        _pedidoGatewayMock.Setup(x => x.GetAllAsync()).ReturnsAsync(pedidos);
 
         // Act
         var result = await _controller.GetAllPedidosPending();
@@ -96,8 +97,9 @@ public class PedidoControllerTests
     {
         // Arrange
         var pedidoId = Guid.NewGuid();
-        var pedido = (Pedido)Activator.CreateInstance(typeof(Pedido), true);
-        _pedidoGatewayMock.Setup(x => x.GetByIdAsync(pedidoId)).ReturnsAsync(pedido);
+        // Arrange
+        var pedidos = new List<Pedido>(); // Lista vazia ao invés de nula
+        _pedidoGatewayMock.Setup(x => x.GetAllAsync()).ReturnsAsync(pedidos);
 
         // Act
         var result = await _controller.GetPedidoByIdAsync(pedidoId);

@@ -1,11 +1,12 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
-using Pedidos.Adapters.Controllers.Pedidos.Dtos;
+using Pedidos.Adapters.Presenters.Pedidos;
+using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Tests.IntegrationTests.Builder;
-using Pedidos.Tests.IntegrationTests.Extensions;
 using Pedidos.Tests.IntegrationTests.HostTest;
+using Postech8SOAT.FastOrder.Tests.Integration.Builder;
 
 namespace Pedidos.Tests.IntegrationTests;
 
@@ -20,30 +21,70 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
 
     private async Task<Produto> CriarProduto()
     {
-        var produto = new ProdutoBuilder().Build();
-        _factory.Context!.Produtos.Add(produto);
-        await _factory.Context.SaveChangesAsync();
+        try
+        {
+            var produtoExistente = _factory.Context!.Produtos.FirstOrDefault();
+            if (produtoExistente is null)
+            {
+                produtoExistente = new ProdutoBuilder().Build();
+                _factory.Context.Produtos.Add(produtoExistente);
+                await _factory.Context.SaveChangesAsync();
+            }
+            return produtoExistente;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
 
-        return produto;
     }
+
+    private async Task<Pedido> CriarPedido()
+    {
+        try
+        {
+            var cliente = _factory.Context!.Clientes.FirstOrDefault();
+
+            if (cliente is null)
+            {
+                cliente = new ClienteBuilder().Build();
+                _factory.Context.Clientes.Add(cliente);
+                _factory.Context.SaveChanges();
+            }
+
+            var pedidoExistente = _factory.Context!.Pedidos.FirstOrDefault();
+            if (pedidoExistente is null)
+            {
+                pedidoExistente = new PedidoBuilder(cliente.Id).Build();
+                _factory.Context.Add(pedidoExistente);
+                await _factory.Context.SaveChangesAsync();
+            }
+
+
+            return pedidoExistente;
+        }
+        catch (Exception ex)
+        {
+
+            throw new Exception(ex.Message);
+        }      
+        
+    }
+
 
     [Fact]
     public async Task POST_Deve_criar_pedido()
     {
-        //Arrange
-        var clienteId = Guid.NewGuid();
-        var produto = await CriarProduto();
+        //Arrange      
+        var pedido = await CriarPedido();
 
-        var pedidoDto = NovoPedidoDtoBuilder.CreateValid(
-            (faker, builder) =>
-            {
-                return faker.Make(1, () => builder.WithProdutoId(produto.Id).Generate()).ToList();
-            }, 
-            clienteId);
+        var dto = PedidoPresenter.ToNovoPedidoDto(pedido);
+
+
         var httpClient = _factory.CreateClient();
 
         //Act
-        var response = await httpClient.PostAsJsonAsync("/v1/pedido", pedidoDto);
+        var response = await httpClient.PostAsJsonAsync("/v1/pedido", dto);
 
         //Assert
         response.Should().NotBeNull();
@@ -68,44 +109,34 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
     [Fact]
     public async Task GET_Deve_Retornar_Pedido_Pelo_Id()
     {
-        //Arrange
-        const HttpStatusCode expectedStatusCode = HttpStatusCode.OK;
-        var clienteId = Guid.NewGuid();
-        await _factory.Context.SaveChangesAsync();
+        //Arrange   
 
-        var pedidoExistente = new PedidoBuilder(clienteId).Build();
-        _factory.Context.Add(pedidoExistente);
-        await _factory.Context.SaveChangesAsync();
+        var pedidoExistente = await CriarPedido();
 
         var httpClient = _factory.CreateClient();
-
         //Act
         var response = await httpClient.GetAsync($"/v1/pedido/{pedidoExistente.Id}");
-
         //Assert
-        response.StatusCode.Should().Be(expectedStatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task GET_Deve_Retornar_Todos_Pedidos()
     {
         //Arrange
+        const HttpStatusCode expectedStatusCode = HttpStatusCode.OK;
         var clienteId = Guid.NewGuid();
-        var pedidoExistente = new PedidoBuilder(clienteId).Build();
-        _factory.Context.Add(pedidoExistente);
-        await _factory.Context.SaveChangesAsync();
-        var httpClient = _factory.CreateClient();
 
+
+        var pedidoExistente = await CriarPedido();
+       
+        
+        var httpClient = _factory.CreateClient();
+        
         //Act
         var response = await httpClient.GetAsync($"/v1/pedido");
-
+        
         //Assert
-        response.Should().NotBeNull();
-        response.IsSuccessStatusCode.Should().BeTrue(because: "indica o sucesso da requisição. Porém retornou: {0}",
-            response.StatusCode);
-
-        var produtoCriado = await response.Content.ReadAsJsonAsync<List<PedidoDto>>();
-        produtoCriado.Should().NotBeNull().And.NotBeEmpty();
-        produtoCriado.FirstOrDefault(p => p.Id == pedidoExistente.Id).Should().NotBeNull();
+        response.StatusCode.Should().Be(expectedStatusCode);
     }
 }

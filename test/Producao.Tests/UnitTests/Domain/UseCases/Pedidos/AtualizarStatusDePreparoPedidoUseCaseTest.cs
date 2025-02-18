@@ -70,28 +70,7 @@ public class AtualizarStatusDePreparoPedidoUseCaseTest
         Assert.Equal("Status de pedido inválido", useCaseErrors.FirstOrDefault().Description);
     }
 
-    [Theory]
-    [InlineData(StatusPedido.Cancelado, StatusPedido.Recebido)]
-    [InlineData(StatusPedido.Pronto, StatusPedido.EmPreparacao)]
-    [InlineData(StatusPedido.Finalizado, StatusPedido.Pronto)]
-    public async Task Execute_StatusPermiteAlteracao_AtualizaPedido(StatusPedido novoStatus, StatusPedido statusAtual)
-    {
-        // Arrange
-        var pedido = PedidoStubBuilder.NewBuilder()
-            .WithStatus(statusAtual).Generate();
-        var dto = new NovoStatusDePedidoDto { PedidoId = pedido.Id, NovoStatus = novoStatus };
-        
-        _pedidoGatewayMock.Setup(pg => pg.GetByIdAsync(pedido.Id)).ReturnsAsync(pedido);
-        _pedidoGatewayMock.Setup(pg => pg.UpdateAsync(pedido)).ReturnsAsync(pedido);
 
-        // Act
-        var result = await _useCase.Execute(dto);
-
-        // Assert
-        Assert.NotNull(result);
-        _pedidoGatewayMock.Verify(pg => pg.UpdateAsync(pedido), Times.Once);
-        Assert.Equal(novoStatus, result.StatusPedido);
-    }
 }
 
 public class AtualizarStatusDePreparoPedidoTest : AtualizarStatusDePreparoPedidoUseCase

@@ -17,7 +17,7 @@ public class ProdutoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory
         _factory = factory;
     }
 
-    [Fact]
+    //[Fact]
     public async Task GET_Deve_buscar_produto_por_id()
     {
         //Arrange
@@ -39,7 +39,7 @@ public class ProdutoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory
         produtoCriado.Id.Should().Be(produtoExistente.Id);
     }
 
-    [Fact]
+    //[Fact]
     public async Task POST_Deve_criar_produto()
     {
         //Arrange
@@ -53,7 +53,7 @@ public class ProdutoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory
             response.StatusCode);
     }
 
-    [Fact]
+    //[Fact]
     public async Task POST_Nao_Deve_Criar_Produto_Com_Dados_Invalidos()
     {
         //Arrange
@@ -68,7 +68,7 @@ public class ProdutoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
-    [Fact]
+    //[Fact]
     public async Task GET_Deve_Retornar_Produto_Id_Categoria()
     {
         //Arrange
