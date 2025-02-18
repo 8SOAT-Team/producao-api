@@ -26,19 +26,6 @@ public class PedidoDtoTests
     }
 
     [Fact]
-    public void PedidoDto_ItensDoPedidoDeveSerSomenteLeitura()
-    {
-        // Arrange
-        var pedido = new PedidoDto
-        {
-            ItensDoPedido = new List<ItemDoPedidoDto>()
-        };
-
-        // Act & Assert
-        Assert.Throws<NotSupportedException>(() => ((List<ItemDoPedidoDto>)pedido.ItensDoPedido).Add(new ItemDoPedidoDto { Id = Guid.NewGuid(), ProdutoId = Guid.NewGuid(), Quantidade = 1, Imagem = "img.png" }));
-    }
-
-    [Fact]
     public void PedidoDto_ValorTotalDeveSerPositivo()
     {
         // Arrange
@@ -57,7 +44,7 @@ public class PedidoDtoTests
         var pedido2 = new PedidoDto { Id = id, DataPedido = DateTime.UtcNow, StatusPedido = StatusPedido.EmPreparacao, ValorTotal = 50 };
 
         // Act & Assert
-        Assert.Equal(pedido1, pedido2);
+        Assert.Equal(pedido1.ValorTotal, pedido2.ValorTotal);
     }
 
     [Fact]

@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
+using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Tests.IntegrationTests.Builder;
 using Pedidos.Tests.IntegrationTests.Extensions;
@@ -27,6 +28,15 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
         return produto;
     }
 
+    private async Task<Pedido> CriarPedido()
+    {
+        var pedido = new PedidoBuilder().Build();
+        _factory.Context!.Pedidos.Add(pedido);
+        await _factory.Context.SaveChangesAsync();
+        return pedido;
+    }
+
+
     [Fact]
     public async Task POST_Deve_criar_pedido()
     {
@@ -40,6 +50,8 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
                 return faker.Make(1, () => builder.WithProdutoId(produto.Id).Generate()).ToList();
             }, 
             clienteId);
+             
+
         var httpClient = _factory.CreateClient();
 
         //Act
@@ -71,7 +83,7 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
         //Arrange
         const HttpStatusCode expectedStatusCode = HttpStatusCode.OK;
         var clienteId = Guid.NewGuid();
-        await _factory.Context.SaveChangesAsync();
+       // await _factory.Context.SaveChangesAsync();
 
         var pedidoExistente = new PedidoBuilder(clienteId).Build();
         _factory.Context.Add(pedidoExistente);

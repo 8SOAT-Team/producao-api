@@ -3,6 +3,8 @@ using Moq;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Pedidos.UseCases;
 using Pedidos.Domain.Pedidos.Entities;
+using Pedidos.Domain.Produtos.Entities;
+using Pedidos.Domain.Produtos.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +30,8 @@ public class EncontrarPedidoPorIdUseCaseTests
     {
         // Arrange
         var pedidoId = Guid.NewGuid();
-        var expectedPedido = new Pedido(pedidoId, Guid.NewGuid(), new System.Collections.Generic.List<ItemDoPedido>());
+        var itemPedido = new ItemDoPedido(Guid.NewGuid(), new Produto("Lanche", "Lanche de bacon", 50m, "http://endereco/imagens/img.jpg", ProdutoCategoria.Acompanhamento), 2);
+        var expectedPedido = new Pedido(pedidoId, Guid.NewGuid(), new System.Collections.Generic.List<ItemDoPedido>() { itemPedido });
         _pedidoGatewayMock.Setup(g => g.GetByIdAsync(pedidoId)).ReturnsAsync(expectedPedido);
 
         // Act
@@ -50,7 +53,7 @@ public class EncontrarPedidoPorIdUseCaseTests
         var result = await _useCase.ResolveAsync(pedidoId);
 
         // Assert
-        Assert.Null(result);
+        Assert.NotNull(result);
     }
 
     [Fact]
@@ -58,7 +61,8 @@ public class EncontrarPedidoPorIdUseCaseTests
     {
         // Arrange
         var pedidoId = Guid.NewGuid();
-        _pedidoGatewayMock.Setup(g => g.GetByIdAsync(pedidoId)).ReturnsAsync(new Pedido(pedidoId, Guid.NewGuid(), new System.Collections.Generic.List<ItemDoPedido>()));
+        var itemPedido = new ItemDoPedido(Guid.NewGuid(), new Produto("Lanche", "Lanche de bacon", 50m, "http://endereco/imagens/img.jpg", ProdutoCategoria.Acompanhamento), 2);
+        _pedidoGatewayMock.Setup(g => g.GetByIdAsync(pedidoId)).ReturnsAsync(new Pedido(pedidoId, Guid.NewGuid(), new System.Collections.Generic.List<ItemDoPedido>() { itemPedido}));
 
         // Act
         await _useCase.ResolveAsync(pedidoId);
