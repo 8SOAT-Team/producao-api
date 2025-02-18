@@ -1,5 +1,5 @@
 # 📦 API de Produção 
-![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/victoromc/bd5447fccccec9b660124c91b3d27ae3/raw/pedidos-code-coverage.json)
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/victoromc/87b5cd5307913b1bac586c27b7e9b324/raw/producao-code-coverage.json)
 
 ## Objetivos
 
@@ -17,25 +17,25 @@ Para rodar o sistema localmente, você precisará de:
 - Restaurar Dependências:
   
 ```sh
-dotnet restore src/Pedidos.Api/Pedidos.Api.csproj
+dotnet restore src/Producao.Api/Producao.Api.csproj
 ```
 
 - Compilar o projeto:
 
 ```sh
-dotnet build src/Pedidos.Api/Pedidos.Api.csproj -c Release --no-restore
+dotnet build src/Producao.Api/Producao.Api.csproj -c Release --no-restore
 ```
 
 - Executar testes:
 
 ```sh
-dotnet test Pedidos.sln -c Release --no-build --no-restore
+dotnet test Producao.sln -c Release --no-build --no-restore
 ```
 
 - Executar API localemte:
 
 ```sh
-dotnet run --project src/Pedidos.Api/Pedidos.Api.csproj
+dotnet run --project src/Producao.Api/Producao.Api.csproj
 ```
 
 
@@ -44,13 +44,13 @@ dotnet run --project src/Pedidos.Api/Pedidos.Api.csproj
 - Build da Imagem:
 
 ```sh
-docker build -t pedidos-api .
+docker build -t producao-api .
 ```
 
 - Execute o container:
 
 ```sh
-docker run -p 5000:5000 pedidos-api
+docker run -p 5000:5000 producao-api
 ```
 
 
@@ -153,7 +153,7 @@ kubectl get pods -n fast-order
 
 - Aplica os manifests Kubernetes armazenados na pasta `iac/kubernetes/`.
 
-- Aguarda a conclusão do rollout do `deployment pedidos-dep` no `namespace fast-order`.    
+- Aguarda a conclusão do rollout do `deployment ´producao-dep` no `namespace fast-order`.    
 
 
 ## Estrutura dos diretórios
