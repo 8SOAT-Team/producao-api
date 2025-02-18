@@ -26,6 +26,19 @@ public static class PedidoPresenter
         };
     }
 
+    public static NovoPedidoDto ToNovoPedidoDto(this Pedido pedido)
+    {
+        return new NovoPedidoDto
+        {
+            ClienteId = pedido.ClienteId,
+            ItensDoPedido = pedido.ItensDoPedido.Select(p => new NovoItemDePedido
+            {
+                ProdutoId = p.ProdutoId,
+                Quantidade = p.Quantidade
+            }).ToList()
+        };
+    }
+
     public static List<PedidoDto> ToListPedidoDto(this List<Pedido> pedidos)
     {
         return pedidos.Select(p => p.ToPedidoDto()).ToList();

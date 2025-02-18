@@ -51,7 +51,7 @@ namespace Pedidos.Infrastructure.Migrations
                     ClienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ValorTotal = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     PagamentoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StatusPagamento = table.Column<int>(type: "int", nullable: false)
+                    StatusPagamento = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
