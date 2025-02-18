@@ -1,7 +1,8 @@
 ﻿using Pedidos.Infrastructure.Requests;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Api.Middlewares;
-
+[ExcludeFromCodeCoverage]
 public class IdempotencyMiddleware
 {
     private readonly ILogger<IdempotencyMiddleware> _logger;

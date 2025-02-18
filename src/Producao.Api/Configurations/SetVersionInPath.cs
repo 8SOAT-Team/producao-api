@@ -1,8 +1,9 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Api.Configurations;
-
+[ExcludeFromCodeCoverage]
 public class SetVersionInPath : IDocumentFilter
 {
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)

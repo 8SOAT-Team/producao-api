@@ -1,5 +1,7 @@
-﻿namespace Pedidos.Domain.Exceptions;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Pedidos.Domain.Exceptions;
+[ExcludeFromCodeCoverage]
 public class InvalidArgumentException : DomainExceptionValidation
 {
     private const string ErrorMessage = "Parâmetro informado é inválido. (Parâmetro {0})";

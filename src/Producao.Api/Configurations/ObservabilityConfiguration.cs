@@ -1,4 +1,5 @@
 using Serilog;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Api.Configurations;
 

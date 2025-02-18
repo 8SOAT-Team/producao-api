@@ -1,4 +1,6 @@
-﻿namespace Pedidos.Api.Configurations;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Pedidos.Api.Configurations;
 
 public static class SecurityConfiguration
 {

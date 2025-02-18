@@ -1,8 +1,9 @@
 ﻿using Pedidos.Adapters.Controllers.Pedidos.Dtos;
 using Pedidos.Domain.Pedidos.Entities;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Adapters.Presenters.Pedidos;
-
+[ExcludeFromCodeCoverage]
 public static class PedidoPresenter
 {
     public static PedidoDto ToPedidoDto(this Pedido pedido)

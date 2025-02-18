@@ -1,5 +1,6 @@
 using Microsoft.OpenApi.Models;
 using Pedidos.Api.Endpoints;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pedidos.Api.Configurations;
 
