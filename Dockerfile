@@ -17,7 +17,7 @@ RUN dotnet restore "src/Producao.Api/Producao.Api.csproj"
 
 COPY . .
 
-WORKDIR "/src/Producao.Api"
+WORKDIR "/src/src/Producao.Api"
 
 RUN dotnet build "Producao.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
