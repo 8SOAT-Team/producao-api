@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: producao-api-svc
+  namespace: fast-order
+spec:
+  selector:
+    app: producao-api
+  type: LoadBalancer
+  ports:
+    - port: 80
+      name: http
+      targetPort: 5271

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producao-dep
+  namespace: fast-order
+  labels:
+    app: producao-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: producao-api
+  template:
+    metadata:
+      labels:
+        app: producao-api
+    spec:
+      containers:
+      - name: producao-api-cont
+        image: sickbanger/producao-api:latest
+        ports:
+        - containerPort: 5271
+        - containerPort: 7205
+        envFrom:
+          - configMapRef:
+              name: producao-api-configmap
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5271
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5271
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 3
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
