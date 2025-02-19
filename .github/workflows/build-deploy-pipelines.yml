@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
 
       - name: Debug - Listando arquivos na API
-        run: ls -R src/producao.Api
+        run: ls -R src/Producao.Api
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v3
         with:
@@ -24,14 +24,14 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          cd src/producao.Api
-          dotnet restore producao.Api.csproj
+          cd src/Producao.Api
+          dotnet restore Producao.Api.csproj
 
       - name: Build and publish
         run: |
-          cd src/producao.Api
-          dotnet build producao.Api.csproj -c Release --no-restore
-          dotnet publish producao.Api.csproj -c Release -o app/publish /p:UseAppHost=false
+          cd src/Producao.Api
+          dotnet build Producao.Api.csproj -c Release --no-restore
+          dotnet publish Producao.Api.csproj -c Release -o app/publish /p:UseAppHost=false
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -45,14 +45,14 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/producao-api:latest \
-            -t ${{ secrets.DOCKER_USERNAME }}/producao-api:${{ github.sha }} \
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/Producao-api:latest \
+            -t ${{ secrets.DOCKER_USERNAME }}/Producao-api:${{ github.sha }} \
             .
 
       - name: Push Docker images to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/producao-api:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/producao-api:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/Producao-api:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/Producao-api:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -92,4 +92,4 @@ jobs:
         run: |
           kubectl apply -f iac/kubernetes/namespace.yaml
           kubectl apply -f iac/kubernetes
-          kubectl rollout status deployment/producao-dep -n fast-order
+          kubectl rollout status deployment/Producao-dep -n fast-order
