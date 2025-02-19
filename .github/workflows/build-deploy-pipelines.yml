@@ -46,7 +46,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/producao-api:latest \
-            -t ${{ secrets.DOCKER_USERNAME }}/Producao-api:${{ github.sha }} \
+            -t ${{ secrets.DOCKER_USERNAME }}/producao-api:${{ github.sha }} \
             .
 
       - name: Push Docker images to Docker Hub
