@@ -19,22 +19,21 @@ spec:
       - name: producao-api-cont
         image: sickbanger/producao-api:latest
         ports:
-        - containerPort: 5271
-        - containerPort: 7205
+        - containerPort: 8080
         envFrom:
           - configMapRef:
               name: producao-api-configmap
         livenessProbe:
           httpGet:
             path: /health
-            port: 5271
+            port: 8080
           initialDelaySeconds: 20
           periodSeconds: 10
           failureThreshold: 3
         readinessProbe:
           httpGet:
             path: /health
-            port: 5271
+            port: 8080
           initialDelaySeconds: 10
           periodSeconds: 5
           failureThreshold: 3
