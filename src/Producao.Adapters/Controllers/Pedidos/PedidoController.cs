@@ -6,9 +6,7 @@ using Pedidos.Adapters.Types.Results;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Pedidos.UseCases;
 using Pedidos.Apps.Pedidos.UseCases.Dtos;
-using Pedidos.Apps.Produtos.Gateways.Produtos;
 using Pedidos.Domain.Pedidos.Entities;
-using Pedidos.Domain.Pedidos.Enums;
 using NovoPedidoDto = Pedidos.Adapters.Controllers.Pedidos.Dtos.NovoPedidoDto;
 using NovoPedido = Pedidos.Apps.Pedidos.UseCases.Dtos.NovoPedidoDto;
 using ItemDoPedido = Pedidos.Apps.Pedidos.UseCases.Dtos.ItemDoPedidoDto;
@@ -18,21 +16,15 @@ namespace Pedidos.Adapters.Controllers.Pedidos;
 [ExcludeFromCodeCoverage]
 public class PedidoController(
     ILoggerFactory logger,
-    IPedidoGateway pedidoGateway,
-    IProdutoGateway produtoGateway) : IPedidoController
+    IPedidoGateway pedidoGateway) : IPedidoController
 {
-    private readonly ILoggerFactory _logger = logger;
-    private readonly IPedidoGateway _pedidoGateway = pedidoGateway;
-    private readonly IProdutoGateway _produtoGateway = produtoGateway;
-
-    public async Task<Result<PedidoDto>> AtualizarStatusDePreparacaoDoPedido(StatusPedido novoStatus, Guid pedidoId)
+    public async Task<Result<PedidoDto>> FinalizarPreparoPedido(Guid pedidoId)
     {
         var useCase =
-            new AtualizarStatusDePreparoPedidoUseCase(_logger.CreateLogger<AtualizarStatusDePreparoPedidoUseCase>(),
-                _pedidoGateway);
-        var useCaseResult = await useCase.ResolveAsync(new NovoStatusDePedidoDto
+            new FinalizarPreparoPedidoUseCase(logger.CreateLogger<FinalizarPreparoPedidoUseCase>(),
+                pedidoGateway);
+        var useCaseResult = await useCase.ResolveAsync(new FinalizarPreparoPedidoDto
         {
-            NovoStatus = novoStatus,
             PedidoId = pedidoId
         });
 
@@ -46,14 +38,14 @@ public class PedidoController(
 
     public async Task<Result<PedidoDto>> CreatePedidoAsync(NovoPedidoDto pedido)
     {
-        var useCase = new CriarNovoPedidoUseCase(_logger.CreateLogger<CriarNovoPedidoUseCase>(), _pedidoGateway,
-            _produtoGateway);
+        var useCase = new CriarNovoPedidoUseCase(logger.CreateLogger<CriarNovoPedidoUseCase>(), pedidoGateway);
         var useCaseResult = await useCase.ResolveAsync(new NovoPedido
         {
-            ClienteId = pedido.ClienteId,
+            PedidoId = pedido.PedidoId,
             ItensDoPedido = pedido.ItensDoPedido.Select(i => new ItemDoPedido
             {
-                ProdutoId = i.ProdutoId,
+                Nome = i.Nome,
+                Categoria = i.Categoria,
                 Quantidade = i.Quantidade
             }).ToList()
         });
@@ -65,22 +57,10 @@ public class PedidoController(
             .Build();
     }
 
-    public async Task<Result<List<PedidoDto>>> GetAllPedidosAsync()
-    {
-        var useCase = new ListarTodosPedidosUseCase(_logger.CreateLogger<ListarTodosPedidosUseCase>(), _pedidoGateway);
-        var useCaseResult = await useCase.ResolveAsync(Any<object>.Empty);
-
-        return ControllerResultBuilder<List<PedidoDto>, List<Pedido>>
-            .ForUseCase(useCase)
-            .WithResult(useCaseResult)
-            .AdaptUsing(PedidoPresenter.ToListPedidoDto)
-            .Build();
-    }
-
     public async Task<Result<List<PedidoDto>>> GetAllPedidosPending()
     {
-        var useCase = new ObterListaPedidosPendentesUseCase(_logger.CreateLogger<ObterListaPedidosPendentesUseCase>(),
-            _pedidoGateway);
+        var useCase = new ObterListaPedidosPendentesUseCase(logger.CreateLogger<ObterListaPedidosPendentesUseCase>(),
+            pedidoGateway);
         var useCaseResult = await useCase.ResolveAsync(Any<object>.Empty);
 
         return ControllerResultBuilder<List<PedidoDto>, List<Pedido>>
@@ -93,7 +73,7 @@ public class PedidoController(
     public async Task<Result<PedidoDto>> GetPedidoByIdAsync(Guid id)
     {
         var useCase =
-            new EncontrarPedidoPorIdUseCase(_logger.CreateLogger<EncontrarPedidoPorIdUseCase>(), _pedidoGateway);
+            new EncontrarPedidoPorIdUseCase(logger.CreateLogger<EncontrarPedidoPorIdUseCase>(), pedidoGateway);
         var useCaseResult = await useCase.ResolveAsync(id);
 
         return ControllerResultBuilder<PedidoDto, Pedido>

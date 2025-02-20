@@ -5,7 +5,7 @@ namespace Pedidos.Api.Dtos;
 
 [ExcludeFromCodeCoverage]
 
-public record AtualizarStatusDoPedidoDto
+public record FinalizaPreparoDoPedidoDto
 {
     public StatusPedido NovoStatus { get; init; }
 }

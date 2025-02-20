@@ -6,23 +6,23 @@ using Pedidos.Apps.Pedidos.UseCases;
 using Pedidos.Apps.Pedidos.UseCases.Dtos;
 using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Domain.Pedidos.Enums;
-using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
+using Pedidos.Domain.Produtos.ValueObjects;
 using Pedidos.Tests.UnitTests.Domain.Stubs.Pedidos;
 
 namespace Pedidos.Tests.UnitTests.Domain.UseCases.Pedidos;
 
-public class AtualizarStatusDePreparoPedidoUseCaseTest
+public class FinalizarPreparoPedidoUseCaseTest
 {
-    private readonly Mock<ILogger<AtualizarStatusDePreparoPedidoUseCase>> _loggerMock;
+    private readonly Mock<ILogger<FinalizarPreparoPedidoUseCase>> _loggerMock;
     private readonly Mock<IPedidoGateway> _pedidoGatewayMock;
-    private readonly AtualizarStatusDePreparoPedidoTest _useCase;
+    private readonly FinalizarPreparoPedidoTest _useCase;
 
-    public AtualizarStatusDePreparoPedidoUseCaseTest()
+    public FinalizarPreparoPedidoUseCaseTest()
     {
-        _loggerMock = new Mock<ILogger<AtualizarStatusDePreparoPedidoUseCase>>();
+        _loggerMock = new Mock<ILogger<FinalizarPreparoPedidoUseCase>>();
         _pedidoGatewayMock = new Mock<IPedidoGateway>();
-        _useCase = new AtualizarStatusDePreparoPedidoTest(_loggerMock.Object, _pedidoGatewayMock.Object);
+        _useCase = new FinalizarPreparoPedidoTest(_loggerMock.Object, _pedidoGatewayMock.Object);
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class AtualizarStatusDePreparoPedidoUseCaseTest
         // Arrange
         var pedidoId = Guid.NewGuid();
         var novoStatus = StatusPedido.EmPreparacao;
-        var dto = new NovoStatusDePedidoDto { PedidoId = pedidoId, NovoStatus = novoStatus };
+        var dto = new FinalizarPreparoPedidoDto { PedidoId = pedidoId, NovoStatus = novoStatus };
 
         _pedidoGatewayMock.Setup(pg => pg.GetByIdAsync(pedidoId)).ReturnsAsync((Pedido?)null);
 
@@ -51,7 +51,7 @@ public class AtualizarStatusDePreparoPedidoUseCaseTest
         // Arrange
         var pedidoId = Guid.NewGuid();
         var novoStatus = (StatusPedido)999;
-        var dto = new NovoStatusDePedidoDto { PedidoId = pedidoId, NovoStatus = novoStatus };
+        var dto = new FinalizarPreparoPedidoDto { PedidoId = pedidoId, NovoStatus = novoStatus };
 
         var produto = new Produto("Lanche", "Lanche de bacon", 50m, "http://endereco/imagens/img.jpg", ProdutoCategoria.Acompanhamento);
         var itemPedido = new ItemDoPedido(Guid.NewGuid(), produto, 2);
@@ -73,14 +73,14 @@ public class AtualizarStatusDePreparoPedidoUseCaseTest
 
 }
 
-public class AtualizarStatusDePreparoPedidoTest : AtualizarStatusDePreparoPedidoUseCase
+public class FinalizarPreparoPedidoTest : FinalizarPreparoPedidoUseCase
 {
-    public AtualizarStatusDePreparoPedidoTest(ILogger<AtualizarStatusDePreparoPedidoUseCase> logger, IPedidoGateway pedidoGateway)
+    public FinalizarPreparoPedidoTest(ILogger<FinalizarPreparoPedidoUseCase> logger, IPedidoGateway pedidoGateway)
         : base(logger, pedidoGateway)
     {
     }
 
-    public new Task<Pedido?> Execute(NovoStatusDePedidoDto request)
+    public new Task<Pedido?> Execute(FinalizarPreparoPedidoDto request)
     {
         return base.Execute(request);
     }

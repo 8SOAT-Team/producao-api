@@ -53,7 +53,7 @@ public class NovoPedidoDtoTests
     }
 }
 
-public class NovoStatusDePedidoDtoTests
+public class FinalizarPreparoPedidoDtoTests
 {
     [Fact]
     public void Deve_Criar_NovoStatusDePedidoDto_Corretamente()
@@ -63,7 +63,7 @@ public class NovoStatusDePedidoDtoTests
         var novoStatus = StatusPedido.Pronto;
 
         // Act
-        var statusDto = new NovoStatusDePedidoDto
+        var statusDto = new FinalizarPreparoPedidoDto
         {
             PedidoId = pedidoId,
             NovoStatus = novoStatus

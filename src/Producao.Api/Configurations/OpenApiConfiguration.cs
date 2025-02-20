@@ -20,8 +20,7 @@ public static class OpenApiConfiguration
         return services;
     }
 
-    public static IApplicationBuilder ConfigureUseSwagger(this IApplicationBuilder app, string apiName,
-        string routePrefix = "docs")
+    public static IApplicationBuilder ConfigureUseSwagger(this IApplicationBuilder app, string apiName)
     {
         app.UseSwagger();
 

@@ -1,6 +1,6 @@
 ﻿using Bogus;
-using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
+using Pedidos.Domain.Produtos.ValueObjects;
 
 namespace Pedidos.Tests.UnitTests.Domain.Stubs.Pedidos;
 

@@ -10,9 +10,12 @@ public class ItensDoPedidoTypeConfiguration : IEntityTypeConfiguration<ItemDoPed
     {
         builder.ToTable("ItensDoPedido");
         builder.HasKey(i => i.Id);
-        builder.Property(i => i.ProdutoId).IsRequired();
         builder.Property(i => i.PedidoId).IsRequired();
-        builder.HasOne(i => i.Produto).WithMany().HasForeignKey(i => i.ProdutoId);
-        builder.HasOne(i => i.Pedido).WithMany(p => p.ItensDoPedido).HasForeignKey(i => i.PedidoId);
+        
+        builder.OwnsOne(p => p.Produto, produto =>
+        {
+            produto.Property(p => p.Nome).IsRequired();
+            produto.Property(p => p.Categoria).IsRequired();
+        });
     }
 }

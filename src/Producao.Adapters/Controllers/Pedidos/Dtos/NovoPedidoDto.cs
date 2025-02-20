@@ -1,17 +1,19 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Apps.Produtos.Enums;
 
 namespace Pedidos.Adapters.Controllers.Pedidos.Dtos;
 
 [ExcludeFromCodeCoverage]
 public record NovoPedidoDto
 {
-    public Guid? ClienteId { get; init; }
+    public Guid PedidoId { get; init; }
     public List<NovoItemDePedido> ItensDoPedido { get; init; } = null!;
 }
 
 [ExcludeFromCodeCoverage]
 public record NovoItemDePedido
 {
-    public Guid ProdutoId { get; init; }
+    public string Nome { get; init; }
+    public ProdutoCategoria Categoria { get; set; }
     public int Quantidade { get; init; }
 }
