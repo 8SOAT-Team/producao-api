@@ -1,4 +1,4 @@
-﻿namespace Pedidos.Api.Endpoints;
+﻿namespace Producao.Api.Endpoints;
 
 public class Constants
 {
