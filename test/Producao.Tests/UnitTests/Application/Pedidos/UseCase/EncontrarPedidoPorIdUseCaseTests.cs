@@ -3,13 +3,13 @@ using Moq;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Pedidos.UseCases;
 using Pedidos.Domain.Pedidos.Entities;
-using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pedidos.Domain.Produtos.ValueObjects;
 
 namespace Pedidos.Tests.UnitTests.Application.Pedidos.UseCase;
 public class EncontrarPedidoPorIdUseCaseTests

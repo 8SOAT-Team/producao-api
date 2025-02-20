@@ -3,8 +3,8 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Pedidos.Apps.Produtos.Gateways.Produtos;
 using Pedidos.Apps.Produtos.UseCases;
-using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
+using Pedidos.Domain.Produtos.ValueObjects;
 
 namespace Pedidos.Tests.UnitTests.Domain.UseCases.Produtos;
 public class EncontrarProdutoPorIdUseCaseTest

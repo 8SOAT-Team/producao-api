@@ -17,7 +17,7 @@ public class PedidoGateway(FastOrderContext dbContext) : IPedidoGateway
     public Task<List<Pedido>> GetAllPedidosPending()
     {
         const string query =
-            "SELECT * FROM Pedidos WHERE StatusPedido IN (3, 2, 1) ORDER BY StatusPedido DESC, DataPedido ASC";
+            "SELECT * FROM Pedidos WHERE StatusPedido IN (2) ORDER BY StatusPedido DESC, DataPedido ASC";
         return dbContext.Pedidos.FromSqlRaw(query).ToListAsync();
     }
 

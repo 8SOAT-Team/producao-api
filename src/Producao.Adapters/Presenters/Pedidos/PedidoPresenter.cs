@@ -1,6 +1,7 @@
 ﻿using Pedidos.Adapters.Controllers.Pedidos.Dtos;
 using Pedidos.Domain.Pedidos.Entities;
 using System.Diagnostics.CodeAnalysis;
+using Pedidos.Apps.Produtos.Enums;
 
 namespace Pedidos.Adapters.Presenters.Pedidos;
 [ExcludeFromCodeCoverage]
@@ -13,29 +14,12 @@ public static class PedidoPresenter
             Id = pedido.Id,
             DataPedido = pedido.DataPedido,
             StatusPedido = pedido.StatusPedido,
-            // Cliente = pedido.Cliente is null ? null : ClientePresenter.AdaptCliente(pedido.Cliente!),
             ItensDoPedido = pedido.ItensDoPedido.Select(p => new ItemDoPedidoDto
             {
-                Id = p.Id,
-                ProdutoId = p.ProdutoId,
-                Quantidade = p.Quantidade,
-                Imagem = p.Produto?.Imagem!
-            }).ToList(),
-            ValorTotal = pedido.ValorTotal
-            // Pagamento = pedido.Pagamento is null ? null : PagamentoPresenter.ToPagamentoDTO(pedido.Pagamento)
-        };
-    }
-
-    public static NovoPedidoDto ToNovoPedidoDto(this Pedido pedido)
-    {
-        return new NovoPedidoDto
-        {
-            ClienteId = pedido.ClienteId,
-            ItensDoPedido = pedido.ItensDoPedido.Select(p => new NovoItemDePedido
-            {
-                ProdutoId = p.ProdutoId,
+                Nome = p.Produto.Nome,
+                Categoria = (ProdutoCategoria)p.Produto.Categoria,
                 Quantidade = p.Quantidade
-            }).ToList()
+            }).ToList(),
         };
     }
 

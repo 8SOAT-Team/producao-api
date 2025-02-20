@@ -8,7 +8,6 @@ public interface IPedidoController
 {
     Task<Result<PedidoDto>> GetPedidoByIdAsync(Guid id);
     Task<Result<PedidoDto>> CreatePedidoAsync(NovoPedidoDto pedido);
-    Task<Result<List<PedidoDto>>> GetAllPedidosAsync();
     Task<Result<List<PedidoDto>>> GetAllPedidosPending();
-    Task<Result<PedidoDto>> AtualizarStatusDePreparacaoDoPedido(StatusPedido status, Guid pedidoId);
+    Task<Result<PedidoDto>> FinalizarPreparoPedido(Guid pedidoId);
 }

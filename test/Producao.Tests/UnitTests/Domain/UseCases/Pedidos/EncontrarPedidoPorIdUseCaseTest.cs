@@ -3,8 +3,8 @@ using Moq;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Apps.Pedidos.UseCases;
 using Pedidos.Domain.Pedidos.Entities;
-using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
+using Pedidos.Domain.Produtos.ValueObjects;
 
 namespace Pedidos.Tests.UnitTests.Domain.UseCases.Pedidos;
 

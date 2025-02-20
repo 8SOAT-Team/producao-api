@@ -1,7 +1,7 @@
 ﻿using Bogus;
-using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
 using System.Diagnostics.CodeAnalysis;
+using Pedidos.Domain.Produtos.ValueObjects;
 
 namespace Pedidos.Tests.IntegrationTests.Builder;
 [ExcludeFromCodeCoverage]

@@ -1,7 +1,9 @@
-﻿using Asp.Versioning;
+﻿using System.Diagnostics.CodeAnalysis;
+using Asp.Versioning;
 
 namespace Pedidos.Api.Endpoints;
 
+[ExcludeFromCodeCoverage]
 public static class VersioningSupport
 {
     public static IServiceCollection ConfigureApiVersioning(this IServiceCollection services)

@@ -1,9 +1,11 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
+using Pedidos.Adapters.Controllers.Pedidos.Dtos;
 using Pedidos.Adapters.Presenters.Pedidos;
+using Pedidos.Apps.Produtos.Enums;
 using Pedidos.Domain.Pedidos.Entities;
-using Pedidos.Domain.Produtos.Entities;
+using Pedidos.Domain.Produtos.ValueObjects;
 using Pedidos.Tests.IntegrationTests.Builder;
 using Pedidos.Tests.IntegrationTests.HostTest;
 using Postech8SOAT.FastOrder.Tests.Integration.Builder;
@@ -78,7 +80,7 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
         //Arrange      
         var pedido = await CriarPedido();
 
-        var dto = PedidoPresenter.ToNovoPedidoDto(pedido);
+        var dto = ToNovoPedidoDto(pedido);
 
 
         var httpClient = _factory.CreateClient();
@@ -135,5 +137,18 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
         
         //Assert
         response.Should().NotBeNull();
+    }
+    
+    public static NovoPedidoDto ToNovoPedidoDto(Pedido pedido)
+    {
+        return new NovoPedidoDto
+        {
+            ItensDoPedido = pedido.ItensDoPedido.Select(p => new NovoItemDePedido
+            {
+                Nome = p.Produto.Nome,
+                Categoria = (ProdutoCategoria)p.Produto.Categoria,
+                Quantidade = p.Quantidade
+            }).ToList()
+        };
     }
 }

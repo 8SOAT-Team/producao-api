@@ -1,7 +1,7 @@
 ﻿using Pedidos.Adapters.Presenters.Pedidos;
 using Pedidos.Domain.Pedidos.Entities;
-using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
+using Pedidos.Domain.Produtos.ValueObjects;
 
 namespace Pedidos.Tests.UnitTests.Adapters.Presenters.UseCases;
 public class PedidoPresenterTests
