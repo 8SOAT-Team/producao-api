@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Pedidos.Infrastructure.Databases;
+using Pedidos.Infrastructure.Pedidos;
+using Pedidos.Tests.IntegrationTests.Fakes;
 using Testcontainers.MsSql;
 
 namespace Pedidos.Tests.IntegrationTests.HostTest;
@@ -34,6 +36,9 @@ public class FastOrderWebApplicationFactory : WebApplicationFactory<Program>, IA
     {
         builder.ConfigureServices(services =>
         {
+            services.RemoveAll<IPedidoApi>();
+            services.AddSingleton<IPedidoApi, FakePedidoApi>();
+            
             services.RemoveAll(typeof(DbContextOptions<FastOrderContext>));
 
             services.AddDbContext<FastOrderContext>(options =>

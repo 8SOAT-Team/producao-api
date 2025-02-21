@@ -23,7 +23,9 @@ public class
         }
 
         pedido.FinalizarPreparo();
-   
+
+        await pedidoGateway.AtualizaApiPedidoPronto(pedido.Id);
+        
         return await pedidoGateway.UpdateAsync(pedido);
     }
 }
