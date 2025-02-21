@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Domain.Pedidos.Enums;
 using Pedidos.Infrastructure.Databases;
 
 namespace Pedidos.Infrastructure.Pedidos.Gateways;
-
+[ExcludeFromCodeCoverage]
 public class PedidoGateway(FastOrderContext dbContext, IPedidoApi pedidoApi) : IPedidoGateway
 {
     public Task<Pedido?> GetPedidoCompletoAsync(Guid id)

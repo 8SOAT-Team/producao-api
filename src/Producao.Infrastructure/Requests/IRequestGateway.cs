@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using Pedidos.Adapters.Gateways.Caches;
 
 namespace Pedidos.Infrastructure.Requests;
@@ -8,7 +9,7 @@ public interface IRequestGateway
     Task<string?> GetRequest(string requestName);
     Task<T> CacheResponse<T>(string requestName, T response);
 }
-
+[ExcludeFromCodeCoverage]
 public class RequestGateway(ICacheContext cacheContext) : IRequestGateway
 {
     private const string RequestKey = "Request:{0}";

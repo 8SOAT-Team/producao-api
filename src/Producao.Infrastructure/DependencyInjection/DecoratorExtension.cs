@@ -1,5 +1,7 @@
-namespace Pedidos.Infrastructure.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
+namespace Pedidos.Infrastructure.DependencyInjection;
+[ExcludeFromCodeCoverage]
 public static class DecoratorExtension
 {
     public static IServiceCollection DecorateIf<TService, TDecorator>(this IServiceCollection services,

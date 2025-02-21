@@ -1,10 +1,11 @@
-﻿using Pedidos.Adapters.Gateways.Caches;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Adapters.Gateways.Caches;
 using Pedidos.CrossCutting;
 using Pedidos.Infrastructure.Databases;
 using StackExchange.Redis;
 
 namespace Pedidos.Infrastructure.DependencyInjection;
-
+[ExcludeFromCodeCoverage]
 public static class CacheService
 {
     public static IServiceCollection AddCacheService(this IServiceCollection services)
