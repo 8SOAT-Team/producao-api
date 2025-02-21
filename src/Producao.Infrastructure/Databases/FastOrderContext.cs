@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using Pedidos.Domain.Pedidos.Entities;
 
 namespace Pedidos.Infrastructure.Databases;
-
+[ExcludeFromCodeCoverage]
 public class FastOrderContext : DbContext
 {
     public FastOrderContext()
