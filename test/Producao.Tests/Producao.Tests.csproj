@@ -49,4 +49,9 @@
         <ProjectReference Include="..\..\src\Producao.Domain\Producao.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="BDD\Feature\" />
+      <Folder Include="BDD\Step\" />
+    </ItemGroup>
+
 </Project>

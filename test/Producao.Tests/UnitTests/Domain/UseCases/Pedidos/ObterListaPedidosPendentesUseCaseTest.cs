@@ -25,12 +25,12 @@ public class ObterListaPedidosPendentesUseCaseTest
     public async Task Execute_PedidosPendentesExistem_RetornaListaDePedidosPendentes()
     {
         // Arrange
-        var produto = new Produto("Lanche", "Lanche de bacon", 50m, "http://endereco/imagens/img.jpg", ProdutoCategoria.Acompanhamento);
+        var produto = new Produto("Lanche", ProdutoCategoria.Acompanhamento);
         var itemPedido = new ItemDoPedido(Guid.NewGuid(), produto, 2);
         var pedidosPendentes = new List<Pedido>
             {
-                new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>(){itemPedido}),
-                new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>(){itemPedido})
+                new Pedido(Guid.NewGuid(),  new List<ItemDoPedido>(){itemPedido}),
+                new Pedido(Guid.NewGuid(),  new List<ItemDoPedido>(){itemPedido})
             };
 
         _pedidoGatewayMock.Setup(pg => pg.GetAllPedidosPending()).ReturnsAsync(pedidosPendentes);

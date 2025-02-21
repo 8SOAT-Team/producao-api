@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Pedidos.Adapters.Controllers.Pedidos;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
 using Pedidos.Adapters.Types.Results;
-using Pedidos.Api.Dtos;
 using Pedidos.Api.Endpoints;
 using Pedidos.Api.Endpoints.Extensions;
 

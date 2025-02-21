@@ -2,13 +2,11 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
-using Pedidos.Adapters.Presenters.Pedidos;
 using Pedidos.Apps.Produtos.Enums;
 using Pedidos.Domain.Pedidos.Entities;
-using Pedidos.Domain.Produtos.ValueObjects;
 using Pedidos.Tests.IntegrationTests.Builder;
 using Pedidos.Tests.IntegrationTests.HostTest;
-using Postech8SOAT.FastOrder.Tests.Integration.Builder;
+
 
 namespace Pedidos.Tests.IntegrationTests;
 
@@ -21,58 +19,18 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
         _factory = factory;
     }
 
-    private async Task<Produto> CriarProduto()
-    {
-        try
-        {
-            var produtoExistente = _factory.Context!.Produtos.FirstOrDefault();
-            if (produtoExistente is null)
-            {
-                produtoExistente = new ProdutoBuilder().Build();
-                _factory.Context.Produtos.Add(produtoExistente);
-                await _factory.Context.SaveChangesAsync();
-            }
-            return produtoExistente;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
-
-    }
-
     private async Task<Pedido> CriarPedido()
-    {
-        try
+    { 
+    
+        var pedidoExistente = _factory.Context!.Pedidos.FirstOrDefault();
+        if (pedidoExistente is null)
         {
-            var cliente = _factory.Context!.Clientes.FirstOrDefault();
-
-            if (cliente is null)
-            {
-                cliente = new ClienteBuilder().Build();
-                _factory.Context.Clientes.Add(cliente);
-                _factory.Context.SaveChanges();
-            }
-
-            var pedidoExistente = _factory.Context!.Pedidos.FirstOrDefault();
-            if (pedidoExistente is null)
-            {
-                pedidoExistente = new PedidoBuilder(cliente.Id).Build();
-                _factory.Context.Add(pedidoExistente);
-                await _factory.Context.SaveChangesAsync();
-            }
-
-
-            return pedidoExistente;
+            pedidoExistente = new PedidoBuilder().Build();
+            _factory.Context.Add(pedidoExistente);
+            await _factory.Context.SaveChangesAsync();
         }
-        catch (Exception ex)
-        {
-
-            throw new Exception(ex.Message);
-        }      
-        
+       return pedidoExistente;       
     }
-
 
     [Fact]
     public async Task POST_Deve_criar_pedido()
@@ -138,7 +96,6 @@ public class PedidoEndpointsTest : IClassFixture<FastOrderWebApplicationFactory>
         //Assert
         response.Should().NotBeNull();
     }
-    
     public static NovoPedidoDto ToNovoPedidoDto(Pedido pedido)
     {
         return new NovoPedidoDto

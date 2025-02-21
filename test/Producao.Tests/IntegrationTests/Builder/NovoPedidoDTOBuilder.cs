@@ -1,20 +1,18 @@
 ﻿using Bogus;
 using Pedidos.Adapters.Controllers.Pedidos.Dtos;
-using Pedidos.Apps.Pedidos.UseCases.Dtos;
 
 namespace Pedidos.Tests.IntegrationTests.Builder;
 
 internal sealed class NovoPedidoDtoBuilder : Faker<Pedidos.Adapters.Controllers.Pedidos.Dtos.NovoPedidoDto>
 {
     public NovoPedidoDtoBuilder()
-    {
-        RuleFor(p => p.ClienteId, f => f.Random.Guid());
+    {    
         RuleFor(p => p.ItensDoPedido, f => f.Make(3, () => NovoItemDePedidoBuilder.CreateBuilder().Generate()));
     }
 
     public NovoPedidoDtoBuilder WithClientId(Guid? clienteId)
     {
-        RuleFor(p => p.ClienteId, clienteId);
+        
         return this;
     }
 
@@ -45,7 +43,7 @@ internal class NovoPedidoDTOBuilder : Faker<Pedidos.Adapters.Controllers.Pedidos
     {
         CustomInstantiator(f => new Pedidos.Adapters.Controllers.Pedidos.Dtos.NovoPedidoDto()
         {
-            ClienteId = f.Random.Guid(),
+         
             ItensDoPedido = new List<NovoItemDePedido>()
             {
                 new NovoItemDePedidoBuilder2().Build(),
@@ -58,7 +56,7 @@ internal class NovoPedidoDTOBuilder : Faker<Pedidos.Adapters.Controllers.Pedidos
     {
         CustomInstantiator(f => new Pedidos.Adapters.Controllers.Pedidos.Dtos.NovoPedidoDto()
         {
-            ClienteId = clienteId,
+         
             ItensDoPedido = new List<NovoItemDePedido>()
             {
                 new NovoItemDePedidoBuilder2().Build(),
@@ -77,7 +75,7 @@ internal class NovoItemDePedidoBuilder2 : Faker<NovoItemDePedido>
     {
         CustomInstantiator(f => new NovoItemDePedido()
         {
-            ProdutoId = RetornaIdProdutoUtil.RetornaIdProduto(),
+         
             Quantidade = f.Random.Int(1, 10)
         });
     }
