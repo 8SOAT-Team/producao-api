@@ -10,6 +10,7 @@ public static class EnvConfig
     public static string DatabaseConnection => EnvConfigValueGetter.MustGetString("DB_CONNECTION_STRING");
     public static string DistributedCacheUrl => EnvConfigValueGetter.MustGetString("DISTRIBUTED_CACHE_URL");
     public static bool RunMigrationsOnStart => EnvConfigValueGetter.GetBool("RUN_MIGRATIONS_ON_START");
+    public static string PedidosApiUrl => EnvConfigValueGetter.MustGetString("PEDIDOS_API_URL");
 
     private static class EnvConfigValueGetter
     {
@@ -34,4 +35,5 @@ public static class EnvConfig
             return bool.TryParse(GetString(key), out var value) && value;
         }
     }
+
 }

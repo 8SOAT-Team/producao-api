@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Domain.Pedidos.Entities;
+using Pedidos.Domain.Pedidos.Enums;
 using Pedidos.Infrastructure.Databases;
 
 namespace Pedidos.Infrastructure.Pedidos.Gateways;
 
-public class PedidoGateway(FastOrderContext dbContext) : IPedidoGateway
+public class PedidoGateway(FastOrderContext dbContext, IPedidoApi pedidoApi) : IPedidoGateway
 {
     public Task<Pedido?> GetPedidoCompletoAsync(Guid id)
     {
@@ -50,5 +51,13 @@ public class PedidoGateway(FastOrderContext dbContext) : IPedidoGateway
         dbContext.Set<Pedido>().Update(pedido);
         await dbContext.SaveChangesAsync();
         return pedido;
+    }
+
+    public async Task AtualizaApiPedidoPronto(Guid pedidoId)
+    {
+        await pedidoApi.AtualizaStatusPedido(pedidoId, new AtualizarStatusDoPedidoDto()
+        {
+            NovoStatus = StatusPedido.Pronto
+        });
     }
 }
