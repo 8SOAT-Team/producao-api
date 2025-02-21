@@ -4,10 +4,10 @@ using Pedidos.Adapters.DependencyInjection;
 using Pedidos.Api.Configurations;
 using Pedidos.Api.Endpoints;
 using Pedidos.Api.Middlewares;
+using Pedidos.Api.Producao;
 using Pedidos.Api.Services;
 using Pedidos.CrossCutting;
 using Pedidos.Infrastructure.DependencyInjection;
-using Producao.Api.Producao;
 
 Env.TraversePath().Load();
 
@@ -41,7 +41,7 @@ var group = app
     .MapGroup("v{version:apiVersion}")
     .WithApiVersionSet(apiVersionSet);
 
-app.AddEndpointProducao(group);
+group.AddEndpointProducao();
 
 app.ConfigureUseSwagger("FastOrder Produção API")
     .ConfigureUseSecurity()

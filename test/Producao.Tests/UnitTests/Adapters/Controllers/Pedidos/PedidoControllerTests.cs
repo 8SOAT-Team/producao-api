@@ -33,7 +33,7 @@ public class PedidoControllerTests
         _pedidoGatewayMock.Setup(x => x.UpdateAsync(It.IsAny<Pedido>())).ReturnsAsync(pedido);
 
         // Act
-        var result = await _controller.AtualizarStatusDePreparacaoDoPedido(novoStatus, pedidoId);
+        var result = await _controller.FinalizarPreparoPedido(novoStatus, pedidoId);
         // Assert
         Assert.IsType<Result<PedidoDto>>(result);
     }

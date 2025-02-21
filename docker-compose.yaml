@@ -1,17 +1,6 @@
 version: '3.4'
 
 services:
-  pedidos-api:
-    image: ${DOCKER_REGISTRY-}pedidosapi
-    build:
-      context: .
-      dockerfile: src/Pedidos.Api/Dockerfile
-    ports:
-      - '57398:57398'
-    environment: 
-        - ASPNETCORE_ENVIRONMENT=Development
-    depends_on:
-      - sqlserver
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     hostname: 'sqlserver'
@@ -24,9 +13,9 @@ services:
       - '11433:1433'
     expose:
       - 1433
-  cache:
+  producao-redis:
     image: redis:8.0-M02-alpine3.20
-    container_name: pedidos-redis
+    container_name: producao-redis
     volumes:
       - /redis/redis-data
     ports:

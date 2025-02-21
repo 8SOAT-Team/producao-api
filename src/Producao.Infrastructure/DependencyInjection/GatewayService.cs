@@ -1,25 +1,25 @@
-﻿using Pedidos.Apps.Pedidos.Gateways;
-using Pedidos.Apps.Produtos.Gateways.Produtos;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.CrossCutting;
+using Pedidos.Infrastructure.Pedidos;
 using Pedidos.Infrastructure.Pedidos.Gateways;
-using Pedidos.Infrastructure.Produtos.Gateways;
 using Pedidos.Infrastructure.Requests;
+using Refit;
 
 namespace Pedidos.Infrastructure.DependencyInjection;
 
+[ExcludeFromCodeCoverage]
 public static class GatewayService
 {
     public static IServiceCollection AddGateways(this IServiceCollection services)
     {
-
-        services.AddScoped<IProdutoGateway, ProdutoGateway>()
-            .DecorateIf<IProdutoGateway, ProdutoGatewayCache>(() => !EnvConfig.IsTestEnv);
-
-        services.AddScoped<IPedidoGateway, PedidoGateway>()
-            .DecorateIf<IPedidoGateway, PedidoGatewayCache>(() => !EnvConfig.IsTestEnv);
-
+        services.AddScoped<IPedidoGateway, PedidoGateway>();
         services.AddSingleton<IRequestGateway, RequestGateway>();
 
+
+        services.AddRefitClient<IPedidoApi>()
+            .ConfigureHttpClient(client => client.BaseAddress = new Uri(EnvConfig.PedidosApiUrl));
+        
         return services;
     }
 }

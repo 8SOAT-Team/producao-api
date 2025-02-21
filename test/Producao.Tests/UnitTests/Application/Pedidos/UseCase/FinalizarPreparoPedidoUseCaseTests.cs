@@ -5,21 +5,21 @@ using Pedidos.Apps.Pedidos.UseCases.Dtos;
 using Pedidos.Apps.Pedidos.UseCases;
 using Pedidos.Domain.Pedidos.Entities;
 using Pedidos.Domain.Pedidos.Enums;
-using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
+using Pedidos.Domain.Produtos.ValueObjects;
 
 namespace Pedidos.Tests.UnitTests.Application.Pedidos.UseCase;
-public class AtualizarStatusDePreparoPedidoUseCaseTests
+public class FinalizarPreparoPedidoUseCaseTests
 {
-    private readonly Mock<ILogger<AtualizarStatusDePreparoPedidoUseCase>> _mockLogger;
+    private readonly Mock<ILogger<FinalizarPreparoPedidoUseCase>> _mockLogger;
     private readonly Mock<IPedidoGateway> _mockPedidoGateway;
-    private readonly AtualizarStatusDePreparoPedidoUseCase _useCase;
+    private readonly FinalizarPreparoPedidoUseCase _useCase;
 
-    public AtualizarStatusDePreparoPedidoUseCaseTests()
+    public FinalizarPreparoPedidoUseCaseTests()
     {
-        _mockLogger = new Mock<ILogger<AtualizarStatusDePreparoPedidoUseCase>>();
+        _mockLogger = new Mock<ILogger<FinalizarPreparoPedidoUseCase>>();
         _mockPedidoGateway = new Mock<IPedidoGateway>();
-        _useCase = new AtualizarStatusDePreparoPedidoUseCase(_mockLogger.Object, _mockPedidoGateway.Object);
+        _useCase = new FinalizarPreparoPedidoUseCase(_mockLogger.Object, _mockPedidoGateway.Object);
     }
 
     [Fact]
@@ -29,7 +29,7 @@ public class AtualizarStatusDePreparoPedidoUseCaseTests
         var pedidoId = Guid.NewGuid();
         _mockPedidoGateway.Setup(x => x.GetByIdAsync(pedidoId)).ReturnsAsync((Pedido?)null);
 
-        var request = new NovoStatusDePedidoDto
+        var request = new FinalizarPreparoPedidoDto
         {
             PedidoId = pedidoId,
             NovoStatus = StatusPedido.Pronto
@@ -51,7 +51,7 @@ public class AtualizarStatusDePreparoPedidoUseCaseTests
         var pedido = new Pedido(Guid.NewGuid(), Guid.NewGuid(), new List<ItemDoPedido>() { itemPedido });
         _mockPedidoGateway.Setup(x => x.GetByIdAsync(pedido.Id)).ReturnsAsync(pedido);
 
-        var request = new NovoStatusDePedidoDto
+        var request = new FinalizarPreparoPedidoDto
         {
             PedidoId = pedido.Id,
             NovoStatus = (StatusPedido)999 // Invalid status
@@ -74,7 +74,7 @@ public class AtualizarStatusDePreparoPedidoUseCaseTests
         _mockPedidoGateway.Setup(x => x.GetByIdAsync(pedido.Id)).ReturnsAsync(pedido);
         _mockPedidoGateway.Setup(x => x.UpdateAsync(pedido)).ReturnsAsync(pedido);
 
-        var request = new NovoStatusDePedidoDto
+        var request = new FinalizarPreparoPedidoDto
         {
             PedidoId = pedido.Id,
             NovoStatus = StatusPedido.Pronto
@@ -96,7 +96,7 @@ public class AtualizarStatusDePreparoPedidoUseCaseTests
         _mockPedidoGateway.Setup(x => x.GetByIdAsync(pedido.Id)).ReturnsAsync(pedido);
         _mockPedidoGateway.Setup(x => x.UpdateAsync(pedido)).ReturnsAsync(pedido);
 
-        var request = new NovoStatusDePedidoDto
+        var request = new FinalizarPreparoPedidoDto
         {
             PedidoId = pedido.Id,
             NovoStatus = StatusPedido.Finalizado
@@ -119,7 +119,7 @@ public class AtualizarStatusDePreparoPedidoUseCaseTests
         _mockPedidoGateway.Setup(x => x.GetByIdAsync(pedido.Id)).ReturnsAsync(pedido);
         _mockPedidoGateway.Setup(x => x.UpdateAsync(pedido)).ReturnsAsync(pedido);
 
-        var request = new NovoStatusDePedidoDto
+        var request = new FinalizarPreparoPedidoDto
         {
             PedidoId = pedido.Id,
             NovoStatus = StatusPedido.Cancelado

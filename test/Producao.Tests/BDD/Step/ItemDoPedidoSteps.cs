@@ -1,7 +1,7 @@
 ﻿using Pedidos.Domain.Exceptions;
 using Pedidos.Domain.Pedidos.Entities;
-using Pedidos.Domain.Produtos.Entities;
 using Pedidos.Domain.Produtos.Enums;
+using Pedidos.Domain.Produtos.ValueObjects;
 using TechTalk.SpecFlow;
 
 namespace Pedidos.Tests.BDD.Step;

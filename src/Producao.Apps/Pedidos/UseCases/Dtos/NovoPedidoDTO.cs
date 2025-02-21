@@ -2,6 +2,6 @@
 
 public record NovoPedidoDto
 {
-    public Guid? ClienteId { get; init; }
+    public Guid PedidoId { get; init; }
     public List<ItemDoPedidoDto> ItensDoPedido { get; init; } = null!;
 }

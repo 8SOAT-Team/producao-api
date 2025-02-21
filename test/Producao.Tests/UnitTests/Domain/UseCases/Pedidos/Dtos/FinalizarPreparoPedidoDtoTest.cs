@@ -2,7 +2,7 @@
 using Pedidos.Domain.Pedidos.Enums;
 
 namespace Pedidos.Tests.UnitTests.Domain.UseCases.Pedidos.Dtos;
-public class NovoStatusDePedidoDtoTest
+public class FinalizarPreparoPedidoDtoTest
 {
 
     [Fact]
@@ -13,7 +13,7 @@ public class NovoStatusDePedidoDtoTest
         StatusPedido novoStatus = StatusPedido.Recebido;
 
         // Act
-        var novoStatusDePedido = new NovoStatusDePedidoDto
+        var novoStatusDePedido = new FinalizarPreparoPedidoDto
         {
             PedidoId = pedidoId,
             NovoStatus = novoStatus
@@ -32,7 +32,7 @@ public class NovoStatusDePedidoDtoTest
         StatusPedido novoStatus = StatusPedido.Cancelado;
 
         // Act
-        var novoStatusDePedido = new NovoStatusDePedidoDto
+        var novoStatusDePedido = new FinalizarPreparoPedidoDto
         {
             PedidoId = pedidoId,
             NovoStatus = novoStatus
@@ -51,7 +51,7 @@ public class NovoStatusDePedidoDtoTest
         StatusPedido novoStatus = StatusPedido.Finalizado;
 
         // Act
-        var novoStatusDePedido = new NovoStatusDePedidoDto
+        var novoStatusDePedido = new FinalizarPreparoPedidoDto
         {
             PedidoId = pedidoId,
             NovoStatus = novoStatus
@@ -70,7 +70,7 @@ public class NovoStatusDePedidoDtoTest
         StatusPedido novoStatus = StatusPedido.EmPreparacao;
 
         // Act
-        var novoStatusDePedido = new NovoStatusDePedidoDto
+        var novoStatusDePedido = new FinalizarPreparoPedidoDto
         {
             PedidoId = pedidoId,
             NovoStatus = novoStatus

@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pedidos.Apps.Pedidos.Gateways;
 using Pedidos.Domain.Pedidos.Entities;
+using Pedidos.Domain.Pedidos.Enums;
 using Pedidos.Infrastructure.Databases;
 
 namespace Pedidos.Infrastructure.Pedidos.Gateways;
 
-public class PedidoGateway(FastOrderContext dbContext) : IPedidoGateway
+public class PedidoGateway(FastOrderContext dbContext, IPedidoApi pedidoApi) : IPedidoGateway
 {
     public Task<Pedido?> GetPedidoCompletoAsync(Guid id)
     {
@@ -17,7 +18,7 @@ public class PedidoGateway(FastOrderContext dbContext) : IPedidoGateway
     public Task<List<Pedido>> GetAllPedidosPending()
     {
         const string query =
-            "SELECT * FROM Pedidos WHERE StatusPedido IN (3, 2, 1) ORDER BY StatusPedido DESC, DataPedido ASC";
+            "SELECT * FROM Pedidos WHERE StatusPedido IN (2) ORDER BY StatusPedido DESC, DataPedido ASC";
         return dbContext.Pedidos.FromSqlRaw(query).ToListAsync();
     }
 
@@ -50,5 +51,13 @@ public class PedidoGateway(FastOrderContext dbContext) : IPedidoGateway
         dbContext.Set<Pedido>().Update(pedido);
         await dbContext.SaveChangesAsync();
         return pedido;
+    }
+
+    public async Task AtualizaApiPedidoPronto(Guid pedidoId)
+    {
+        await pedidoApi.AtualizaStatusPedido(pedidoId, new AtualizarStatusDoPedidoDto()
+        {
+            NovoStatus = StatusPedido.Pronto
+        });
     }
 }
