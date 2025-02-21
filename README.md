@@ -1,6 +1,8 @@
 # 📦 API de Produção 
 ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/victoromc/87b5cd5307913b1bac586c27b7e9b324/raw/producao-code-coverage.json)
 
+ALTERACAO ALEATORIA
+
 ## Objetivos
 
 Este repositório contém a API de produção, desenvolvida utilizando .NET 8. O processo de build, publicação e deployment funciona via workflow no GitHub Actions.
