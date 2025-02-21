@@ -9,6 +9,11 @@ on:
 jobs:
   test-and-coverage-with-report:
     runs-on: ubuntu-latest
+    env:
+      DISTRIBUTED_CACHE_URL: "redis://localhost:6379"
+      ASPNETCORE_ENVIRONMENT: "Test"
+      RUN_MIGRATIONS_ON_START: "true"
+      PEDIDOS_API_URL: "http://localhost:5000"
 
     steps:
       - name: Checkout code
@@ -42,14 +47,14 @@ jobs:
           gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}
 
       - name: Print code coverage
-        run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
+        run: echo "Code coverage percentage ${{ steps.create_coverage_badge.outputs.percentage }}%"
 
       - name: Print badge data
-        run: echo "Badge data ${{steps.create_coverage_badge.outputs.badge}}"
+        run: echo "Badge data ${{ steps.create_coverage_badge.outputs.badge }}"
 
       - name: Install ReportGenerator
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
-      
+
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.4.3
         with:
@@ -114,7 +119,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/producao-api:${{ github.sha }}
 
       - name: Install kubectl
-        run: | 
+        run: |
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
