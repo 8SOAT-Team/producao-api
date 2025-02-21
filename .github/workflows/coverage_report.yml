@@ -9,6 +9,11 @@ on:
 jobs:
   test-and-coverage-with-report:
     runs-on: ubuntu-latest
+    env:
+      DISTRIBUTED_CACHE_URL: "redis://localhost:6379"
+      ASPNETCORE_ENVIRONMENT: "Test"
+      RUN_MIGRATIONS_ON_START: "true"
+      PEDIDOS_API_URL: "http://localhost:5000"
 
     steps:
       - name: Checkout code
