@@ -14,10 +14,10 @@ public class PedidoGatewayTest
         // Arrange
         var mockPedidoGateway = new Mock<IPedidoGateway>();
         var id = Guid.NewGuid();
-        var produto = new Produto("Lanche", "Lanche de bacon", 50m, "http://endereco/imagens/img.jpg", ProdutoCategoria.Acompanhamento);
+        var produto = new Produto("Lanche",ProdutoCategoria.Acompanhamento);
         var itemPedido = new ItemDoPedido(Guid.NewGuid(), produto, 2);
         List<ItemDoPedido> listaItens = new List<ItemDoPedido> { itemPedido };
-        var pedido = new Pedido(id, Guid.NewGuid(), listaItens);
+        var pedido = new Pedido(id,listaItens);
         mockPedidoGateway.Setup(gateway => gateway.GetByIdAsync(id))
             .ReturnsAsync(pedido);
 
@@ -36,11 +36,11 @@ public class PedidoGatewayTest
     {
         // Arrange
         var mockPedidoGateway = new Mock<IPedidoGateway>();
-        var produto = new Produto("Lanche", "Lanche de bacon", 50m, "http://endereco/imagens/img.jpg", ProdutoCategoria.Acompanhamento);
+        var produto = new Produto("Lanche",ProdutoCategoria.Acompanhamento);
         var itemPedido = new ItemDoPedido(Guid.NewGuid(), produto, 2);
         List<ItemDoPedido> listaItens = new List<ItemDoPedido>();
         listaItens.Add(itemPedido);
-        var pedido = new Pedido(Guid.NewGuid(), Guid.NewGuid(), listaItens);
+        var pedido = new Pedido(Guid.NewGuid(), listaItens);
         mockPedidoGateway.Setup(gateway => gateway.CreateAsync(pedido))
             .ReturnsAsync(pedido);
 
@@ -60,10 +60,10 @@ public class PedidoGatewayTest
         // Arrange
         var mockPedidoGateway = new Mock<IPedidoGateway>();
         var id = Guid.NewGuid();
-        var produto = new Produto("Lanche", "Lanche de bacon", 50m, "http://endereco/imagens/img.jpg", ProdutoCategoria.Acompanhamento);
+        var produto = new Produto("Lanche", ProdutoCategoria.Acompanhamento);
         var itemPedido = new ItemDoPedido(Guid.NewGuid(), produto, 2);
         List<ItemDoPedido> listaItens = new List<ItemDoPedido> { itemPedido };
-        var pedido = new Pedido(id, Guid.NewGuid(), listaItens);
+        var pedido = new Pedido(id, listaItens);
         mockPedidoGateway.Setup(gateway => gateway.UpdateAsync(pedido))
             .ReturnsAsync(pedido);
 
@@ -83,15 +83,15 @@ public class PedidoGatewayTest
         // Arrange
         var mockPedidoGateway = new Mock<IPedidoGateway>();
 
-        var produto = new Produto("Lanche", "Lanche de bacon", 50m, "http://endereco/imagens/img.jpg", ProdutoCategoria.Acompanhamento);
+        var produto = new Produto("Lanche", ProdutoCategoria.Acompanhamento);
         var itemPedido = new ItemDoPedido(Guid.NewGuid(), produto, 2);
         List<ItemDoPedido> listaItens = new List<ItemDoPedido> { itemPedido };
-        var pedido1 = new Pedido(Guid.NewGuid(),Guid.NewGuid(), listaItens);
+        var pedido1 = new Pedido(Guid.NewGuid(), listaItens);
 
-        var produto2 = new Produto("Lanche", "Lanche de bacon", 50m, "http://endereco/imagens/img.jpg", ProdutoCategoria.Acompanhamento);
+        var produto2 = new Produto("Lanche", ProdutoCategoria.Acompanhamento);
         var itemPedido2 = new ItemDoPedido(Guid.NewGuid(), produto2, 2);
         List<ItemDoPedido> listaItens2 = new List<ItemDoPedido> { itemPedido };
-        var pedido2 = new Pedido(Guid.NewGuid(),Guid.NewGuid(), listaItens2);
+        var pedido2 = new Pedido(Guid.NewGuid(), listaItens2);
 
         mockPedidoGateway.Setup(gateway => gateway.GetAllPedidosPending())
             .ReturnsAsync(new List<Pedido> { pedido1 });
@@ -133,7 +133,7 @@ public class PedidoServiceTest
 
     public async Task<List<Pedido>> BuscarTodosPedidosAsync()
     {
-        return await _pedidoGateway.GetAllAsync();
+        return await _pedidoGateway.GetAllPedidosPending();
     }
 
     public async Task<List<Pedido>> BuscarPedidosPendentesAsync()
@@ -148,6 +148,6 @@ public class PedidoServiceTest
 
     public async Task<Pedido> AtualizarStatusPagamentoAsync(Pedido pedido)
     {
-        return await _pedidoGateway.AtualizarPedidoPagamentoIniciadoAsync(pedido);
+        return await _pedidoGateway.UpdateAsync(pedido);
     }
 }

@@ -6,9 +6,11 @@ namespace Pedidos.Domain.Produtos.ValueObjects;
 
 public class Produto
 {
-    protected Produto()
+    public Produto()
     {
     }
+
+
 
     [JsonConstructor]
     public Produto(string nome, ProdutoCategoria categoria)

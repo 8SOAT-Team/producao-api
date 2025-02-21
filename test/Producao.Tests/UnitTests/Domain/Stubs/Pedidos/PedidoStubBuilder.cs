@@ -10,8 +10,7 @@ internal sealed class PedidoStubBuilder : Faker<Pedido>
     {
         var clienteId = Guid.NewGuid();
         var itensDoPedido = ItemDoPedidoStubBuilder.CreateMany(f => f.Random.Int(1, 5));
-        CustomInstantiator(f => new Pedido(Guid.NewGuid(), Guid.NewGuid(), itensDoPedido));
-        RuleFor(x => x.ClienteId, clienteId);
+        CustomInstantiator(f => new Pedido(Guid.NewGuid(), itensDoPedido));    
     }
 
     public PedidoStubBuilder WithStatus(StatusPedido status)
