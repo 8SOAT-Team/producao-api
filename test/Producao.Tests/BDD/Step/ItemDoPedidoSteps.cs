@@ -20,11 +20,10 @@ public class ItemDoPedidoSteps
         _pedidoId = Guid.Parse(pedidoId);
     }
 
-    [Given(@"um produto com ID ""(.*)"" e preço de (.*)")]
-    public void DadoUmProdutoComIDEPrecoDe(string produtoId, decimal preco)
+    [Given(@"um produto com ID ""(.*)"" e categoria (.*)")]
+    public void DadoUmProdutoComIDEPrecoDe(string produtoId, ProdutoCategoria categoria)
     {
-        _produto = new Produto("Produto Teste", "Descrição", preco, "http://imagem.com",
-            ProdutoCategoria.Acompanhamento);
+        _produto = new Produto("Produto Teste", categoria);
     }
 
     [Given(@"uma quantidade igual a (.*)")]
@@ -72,14 +71,7 @@ public class ItemDoPedidoSteps
     [Given(@"um produto com ID ""(.*)""")]
     public void DadoUmProdutoComID(string produtoId)
     {
-        _produto = new Produto("Produto Teste", "Descrição", 50.00m, "http://imagem.com",
-            ProdutoCategoria.Acompanhamento);
-    }
-
-    [Then(@"o valor total do item deve ser (.*)")]
-    public void EntaoOValorTotalDoItemDeveSer(decimal valorTotal)
-    {
-        Assert.Equal(valorTotal, _itemDoPedido.ValorTotal);
+        _produto = new Produto("Produto Teste", ProdutoCategoria.Acompanhamento);
     }
 
     [When(@"eu tentar criar o item do pedido")]
@@ -105,26 +97,13 @@ public class ItemDoPedidoSteps
     [Given(@"que eu tenha um item do pedido com ID ""(.*)"" e quantidade inicial igual a (.*)")]
     public void DadoQueEuTenhaUmItemDoPedidoComIDEQuantidadeInicialIgualA(string itemId, int quantidade)
     {
-        _produto = new Produto("Produto Teste", "Descrição", 50.00m, "http://imagem.com",
-            ProdutoCategoria.Acompanhamento);
+        _produto = new Produto("Produto Teste", ProdutoCategoria.Acompanhamento);
         _itemDoPedido = new ItemDoPedido(Guid.Parse(itemId), _produto, quantidade);
-    }
-
-    [When(@"eu adicionar uma quantidade igual a (.*)")]
-    public void QuandoEuAdicionarUmaQuantidadeIgualA(int quantidade)
-    {
-        _itemDoPedido.Adicionar(quantidade);
     }
 
     [Then(@"o item deve ter uma quantidade total igual a (.*)")]
     public void EntaoOItemDeveTerUmaQuantidadeTotalIgualA(int quantidadeEsperado)
     {
         Assert.Equal(quantidadeEsperado, _itemDoPedido.Quantidade);
-    }
-
-    [When(@"eu remover uma quantidade igual a (.*)")]
-    public void QuandoEuRemoverUmaQuantidadeIgualA(int quantidade)
-    {
-        _itemDoPedido.Remover(quantidade);
     }
 }
